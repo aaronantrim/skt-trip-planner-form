@@ -1,128 +1,135 @@
-<div class="left" id="trip-planner">
+<html>
+  <head>
+    <title>otp.js Widget Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css">
+    <link rel="stylesheet" href="http://maps.cherriots.org/planner/build/build.css">
+
+    <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+ <body>
+
+    <!-- Begin Search Form
+
+      The OTP search form should be contained within an element (the
+      "container") which will be passed in to the otp.js RequestFormWidget()
+      utility, invoked by the inline JS snippet at the end of this page.
+
+      Within the container, the following class tags can be applied to
+      elements as described below to indicate to RequestFormWidget() that
+      they are part of an OTP search form:
+
+      otp-from-place : an <input> element for the "from" location. Will be
+        turned into a Select2 dropdown widget w/ geocoding support based on
+        the external otp.js config settings
+      otp-to-place : same as above, for the "to" location
+      otp-arrive-by : a <select> element; value should be true for "arrive
+        by" searches, false for "depart at" searches
+      otp-time-picker : a <div> element tagged as an input-group; will be
+        turned into a Bootstrap 2 DateTimePicker for the OTP search time.
+        Element should include a child <input> element for the date value
+      otp-date-picker : same as above, for the search date
+
+    -->
+
+<div class="left container otp-widget" id="trip-planner">
 <h1>Trip Planner</h1>
 
-<form id="trip-planner-form" class="cmxform" action="/en/trip-planner" method="post" novalidate="novalidate">
+<div class="cmxform" id="trip-planner-form">
+	<div class="form-group">
 	<div class="error-wrapper">
-		<input type="text" name="start" autocorrect="off" autocapitalize="off" placeholder="Start" class="required text">
-		<div class="locate-btn" id="locate-start"></div>
-		<div class="locate-spinner" id="locate-spinner-start"></div>
+		<div class="col-sm-12">
+          <input class="form-control otp-from-place" placeholder="Start Address">
+        </div>
+	</div>
 	</div>
 	<div class="error-wrapper">
-		<input type="text" name="end" autocorrect="off" autocapitalize="off" placeholder="End" class="required text">
-		<div class="locate-btn" id="locate-end"></div>
-		<div class="locate-spinner" id="locate-spinner-end"></div>
+		<div class="form-group">
+		<div class="col-sm-12">
+          <input id="toPlace" class="form-control otp-to-place" placeholder="End Address">
+        </div>
+		</div>
 	</div>
-	<div class="error-wrapper date-wrap">
-		<input type="text" name="date" placeholder="08/17/2015" id="datepicker" class="text hasDatepicker">
-	</div>
+	
+	
+	<div class="input-group date otp-date-picker error-wrapper date-wrap" id="date">
+            <input type="text" class="form-control" id="datepicker">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-time"></span>
+            </span>
+          </div>
+	
 	<div class="clear"></div>
 
-	<div class="selector" id="uniform-depart"><span>Depart</span><select name="depart" id="depart" style="opacity: 0;">
-		<option value="Depart">Depart</option>
-		<option value="Arrive">Arrive</option>
-	</select></div>
+	<div class="selector" id="uniform-depart"><span>Depart</span>
+	          <select class="form-control otp-arrive-by" id="depart" style="opacity: 0;">
+            <option value="true">Arrive by</option>
+            <option value="false" selected>Depart at</option>
+          </select>
+	</div>
 
-	<div class="selector" id="uniform-depart-time"><span>4:30 PM</span><select name="time" id="depart-time" style="opacity: 0;">
-		<option value="00:00">12:00 AM</option>
-		<option value="00:15">12:15 AM</option>
-		<option value="00:30">12:30 AM</option>
-		<option value="00:45">12:45 AM</option>
-		<option value="01:00">1:00 AM</option>
-		<option value="01:15">1:15 AM</option>
-		<option value="01:30">1:30 AM</option>
-		<option value="01:45">1:45 AM</option>
-		<option value="02:00">2:00 AM</option>
-		<option value="02:15">2:15 AM</option>
-		<option value="02:30">2:30 AM</option>
-		<option value="02:45">2:45 AM</option>
-		<option value="03:00">3:00 AM</option>
-		<option value="03:15">3:15 AM</option>
-		<option value="03:30">3:30 AM</option>
-		<option value="03:45">3:45 AM</option>
-		<option value="04:00">4:00 AM</option>
-		<option value="04:15">4:15 AM</option>
-		<option value="04:30">4:30 AM</option>
-		<option value="04:45">4:45 AM</option>
-		<option value="05:00">5:00 AM</option>
-		<option value="05:15">5:15 AM</option>
-		<option value="05:30">5:30 AM</option>
-		<option value="05:45">5:45 AM</option>
-		<option value="06:00">6:00 AM</option>
-		<option value="06:15">6:15 AM</option>
-		<option value="06:30">6:30 AM</option>
-		<option value="06:45">6:45 AM</option>
-		<option value="07:00">7:00 AM</option>
-		<option value="07:15">7:15 AM</option>
-		<option value="07:30">7:30 AM</option>
-		<option value="07:45">7:45 AM</option>
-		<option value="08:00">8:00 AM</option>
-		<option value="08:15">8:15 AM</option>
-		<option value="08:30">8:30 AM</option>
-		<option value="08:45">8:45 AM</option>
-		<option value="09:00">9:00 AM</option>
-		<option value="09:15">9:15 AM</option>
-		<option value="09:30">9:30 AM</option>
-		<option value="09:45">9:45 AM</option>
-		<option value="10:00">10:00 AM</option>
-		<option value="10:15">10:15 AM</option>
-		<option value="10:30">10:30 AM</option>
-		<option value="10:45">10:45 AM</option>
-		<option value="11:00">11:00 AM</option>
-		<option value="11:15">11:15 AM</option>
-		<option value="11:30">11:30 AM</option>
-		<option value="11:45">11:45 AM</option>
-		<option value="12:00">12:00 PM</option>
-		<option value="12:15">12:15 PM</option>
-		<option value="12:30">12:30 PM</option>
-		<option value="12:45">12:45 PM</option>
-		<option value="13:00">1:00 PM</option>
-		<option value="13:15">1:15 PM</option>
-		<option value="13:30">1:30 PM</option>
-		<option value="13:45">1:45 PM</option>
-		<option value="14:00">2:00 PM</option>
-		<option value="14:15">2:15 PM</option>
-		<option value="14:30">2:30 PM</option>
-		<option value="14:45">2:45 PM</option>
-		<option value="15:00">3:00 PM</option>
-		<option value="15:15">3:15 PM</option>
-		<option value="15:30">3:30 PM</option>
-		<option value="15:45">3:45 PM</option>
-		<option value="16:00">4:00 PM</option>
-		<option value="16:15">4:15 PM</option>
-		<option selected="" value="16:30">4:30 PM</option>
-		<option value="16:45">4:45 PM</option>
-		<option value="17:00">5:00 PM</option>
-		<option value="17:15">5:15 PM</option>
-		<option value="17:30">5:30 PM</option>
-		<option value="17:45">5:45 PM</option>
-		<option value="18:00">6:00 PM</option>
-		<option value="18:15">6:15 PM</option>
-		<option value="18:30">6:30 PM</option>
-		<option value="18:45">6:45 PM</option>
-		<option value="19:00">7:00 PM</option>
-		<option value="19:15">7:15 PM</option>
-		<option value="19:30">7:30 PM</option>
-		<option value="19:45">7:45 PM</option>
-		<option value="20:00">8:00 PM</option>
-		<option value="20:15">8:15 PM</option>
-		<option value="20:30">8:30 PM</option>
-		<option value="20:45">8:45 PM</option>
-		<option value="21:00">9:00 PM</option>
-		<option value="21:15">9:15 PM</option>
-		<option value="21:30">9:30 PM</option>
-		<option value="21:45">9:45 PM</option>
-		<option value="22:00">10:00 PM</option>
-		<option value="22:15">10:15 PM</option>
-		<option value="22:30">10:30 PM</option>
-		<option value="22:45">10:45 PM</option>
-		<option value="23:00">11:00 PM</option>
-		<option value="23:15">11:15 PM</option>
-		<option value="23:30">11:30 PM</option>
-		<option value="23:45">11:45 PM</option>
-	</select></div>
+
+	          <div class="input-group date otp-time-picker selector" id="time">
+            <input type="text" class="form-control" data-format="HH:mm PP">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-time"></span>
+            </span>
+          </div>
+          
 
 	<div class="clear"></div>
 
-	<div class="button" id="uniform-submitSearch"><span>Plan My Trip<input type="submit" value="Plan My Trip" id="submitSearch" style="opacity: 0;"></span></div>
+	<div class="button" id="uniform-submitSearch"><button class="otp-search-button btn btn-primary btn-block">Plan trip <span class="glyphicon glyphicon-search"></span></button></div>
 </form>
 				</div>
+				
+    <!-- End Search Form -->
+
+    <!-- Otp.js JS Dependencies -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.0/jquery.xdomainrequest.min.js"></script>
+    <![endif]-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.1/backbone-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/js/bootstrap-datetimepicker.min.js"></script>
+
+    <!-- Otp.js JS Includes from your main otp.js deployment -->
+
+    <script src="http://maps.cherriots.org/planner/config.js"></script>
+    <script src="http://maps.cherriots.org/planner/build/build.js"></script>
+
+
+    <!-- JS Form Initialization -->
+    <script>
+    $(document).ready(function () {
+      var OTP = require('otpjs')
+
+      // The otp.js RequestFormWidget is created with two options:
+      // 1. the element containing the OTP search form above
+      // 2. the base URL for your otp.js client
+      var widget = new OTP.RequestFormWidget({
+        el: $('.otp-widget'),
+        urlBase: 'http://maps.cherriots.org/planner' // replace with your otp.js client url
+      })
+    })
+    </script>
+
+  </body>
+</html>
