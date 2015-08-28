@@ -50,35 +50,35 @@
 
     -->
 
-    <div class="container otp-widget">
+    <div class="otp-widget">
 
       <!-- From Place Selector -->
-      <div class="form-group">
-        <div class="col-sm-12">
-          <input class="form-control otp-from-place" placeholder="Start Address">
+      <div>
+        <div>
+          <input class="otp-from-place" placeholder="Start Address">
         </div>
       </div>
 
       <!-- To Place Selector -->
-      <div class="form-group">
-        <div class="col-sm-12">
-          <input id="toPlace" class="form-control otp-to-place" placeholder="End Address">
+      <div>
+        <div>
+          <input id="toPlace" class="otp-to-place" placeholder="End Address">
         </div>
       </div>
 
-      <div class="form-group">
+      <div>
 
         <!-- Depart/Arrive Dropdown -->
-        <div class="col-sm-6">
-          <select class="form-control otp-arrive-by">
+        <div>
+          <select class="otp-arrive-by">
             <option value="true">Arrive by</option>
             <option value="false" selected>Depart at</option>
           </select>
         </div>
 
         <!-- Time Picker -->
-        <div class="col-sm-6">
-          <div class="input-group date otp-time-picker" id="time">
+        <div>
+          <div id="time" class="input-group date otp-time-picker">
             <input type="text" class="form-control" data-format="HH:mm PP">
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-time"></span>
@@ -88,8 +88,8 @@
       </div>
 
       <!-- Date Picker -->
-      <div class="form-group">
-        <div class="col-sm-12">
+      <div>
+        <div>
           <div class="input-group date otp-date-picker" id="date">
             <input type="text" class="form-control">
             <span class="input-group-addon">
@@ -100,7 +100,7 @@
       </div>
 
       <!-- Search Button -->
-      <div class="form-group col-sm-12">
+      <div>
         <button class="otp-search-button btn btn-primary btn-block">Submit <span class="glyphicon glyphicon-search"></span></button>
       </div>
     </div>
